@@ -64,14 +64,14 @@ def main():
     print("Syncing Nostr users")
     nostr_successful = nostr_syncer.fetch_and_publish_events(NOSTR_PUBLISHERS)
     duration = time.time() - start_time
-    print(f"- Number of native Nostr users fetched: {len(NOSTR_PUBLISHERS)}")
+    print(f"- Number of native Nostr users being fetched: {len(NOSTR_PUBLISHERS)}")
     print(f"- Number of notes copied to news.nos.social: {nostr_successful}")
     print(f"- Duration: {duration:.1f} seconds")
 
     print("\nSyncing Fediverse users")
     fedi_successful = fedi_syncer.fetch_and_publish_events(FEDI_PUBLISHERS)
     duration = time.time() - start_time
-    print(f"- Number of Fediverse users fetched: {len(FEDI_PUBLISHERS)}")
+    print(f"- Number of Fediverse users being fetched: {len(FEDI_PUBLISHERS)}")
     print(f"- Number of notes copied to news.nos.social: {fedi_successful}")
     print(f"- Duration: {duration:.1f} seconds")
 

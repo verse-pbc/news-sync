@@ -22,7 +22,6 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Configuration
 RELAY_URL = "wss://relay.mostr.pub"
-TARGET_IDENTIFIER = "brid.gy_at_bsky"
 OUTPUT_FILE = os.path.join(SCRIPT_DIR, "matching_nhex.txt")
 TIMESTAMP_FILE = os.path.join(SCRIPT_DIR, "last_ran_timestamp.txt")
 
