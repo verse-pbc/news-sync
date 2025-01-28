@@ -6,6 +6,7 @@ import os
 import sys
 import time
 import socket
+import uuid  # Add UUID import
 
 class RelaySyncer:
     def __init__(self, input_relay: str, output_relay: str, timestamp_file: Optional[str] = None, quiet_mode: bool = False):
@@ -18,6 +19,7 @@ class RelaySyncer:
             timestamp_file: File to store last run timestamp (absolute path)
             quiet_mode: Whether to suppress progress output
         """
+        self._log("=== Starting RelaySyncer v2 with new error handling ===")
         self.input_relay = input_relay
         self.output_relay = output_relay
         self.timestamp_file = timestamp_file
@@ -28,12 +30,15 @@ class RelaySyncer:
 
     def _log(self, message: str) -> None:
         """Internal method for logging messages"""
-        print(message, flush=True)
+        # Format specifically for syslog
+        sys.stderr.write(f"{message}\n")
+        sys.stderr.flush()
 
     def _debug(self, message: str) -> None:
         """Internal method for debug logging when not in quiet mode"""
         if not self.quiet_mode:
-            print(message, flush=True)
+            sys.stderr.write(f"{message}\n")
+            sys.stderr.flush()
 
     def _get_last_run_timestamp(self) -> Optional[int]:
         """
@@ -167,7 +172,7 @@ class RelaySyncer:
         if since is not None:
             request["since"] = since
 
-        ws.send(json.dumps(["REQ", "unique_subscription_id", request]))
+        ws.send(json.dumps(["REQ", str(uuid.uuid4()), request]))  # Generate unique subscription ID
 
         while True:
             response = ws.recv()
